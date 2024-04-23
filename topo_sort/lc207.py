@@ -152,5 +152,36 @@ def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
 
 
 """
-
+拓扑排序, 4231的伪代码
+ TopologicalOrder(G)
+      Find a source vertex s and order it first
+      Delete s and its adjacent edges from G; let G be the new graph.
+      TopologicalOrder(G')
+      Append the order found after s.
+所谓删除一个点，即删除改点和其所有的边 outgoing edge
+这个实现就是标记一个点所有外出的相邻边 dfs的 visited=2 标记，在dfs搜索完该点后，再把该点标记成2，代表所有纵深搜索已经完成
+不过注意 删除的这个点 一定是新图的source点 即更新indegree后入度为0的点，实际上是kahn算法的实现
 """
+# 错误
+# class Solution:
+#     def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
+#         graph = [[] for _ in range(n)]
+#         init = [False] * n
+#         for b, a in prerequisites:
+#             graph[a].append(b)
+#             init[b] = False
+#
+#         q = collections.deque([i for i in range(n) if init[i]])
+#         inque = init
+#         visited = [False]*n
+#         while q:
+#             cur = q.popleft()
+#             for j in graph[cur]:
+#                 if visited[j]:
+#                     return False
+#                 if not inque[j]:
+#                     inque[j] = True
+#                     q.append(j)
+#             visited[cur] = True
+#         return True
+#

@@ -35,7 +35,6 @@ class Solution:
         res = [-1] * len(query)
         for i, (s, t) in enumerate(query):
             # s -> t
-            # print(dijkstra(s)[t])
             res[i] = dijkstra(s)[t] & an if dijkstra(s)[t] != inf else -1
 
         return res
