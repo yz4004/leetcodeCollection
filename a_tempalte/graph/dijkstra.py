@@ -23,11 +23,11 @@ q = [(0, 0)]
 dist = [inf] * n
 dist[0] = 0 #出发点
 while q:
-    w, x = heapq.heappop(q)
-    if w > dist[x]: continue  # (O(mn) -> O(mlogm + n)) 提前剪枝 避免空转 x之前出堆过
-    for y, c in g[x]:
-        if dist[y] > w + c:
-            dist[y] = w + c
+    d, x = heapq.heappop(q)
+    if d > dist[x]: continue  # (O(mn) -> O(mlogm + n)) 提前剪枝 避免空转 x之前出堆过
+    for y, w in g[x]:
+        if dist[y] > d + w:
+            dist[y] = d + w
             heapq.heappush(q, (dist[y], y))
 # dist
 # pred
@@ -41,14 +41,14 @@ dist = [inf] * n
 dist[0] = 0
 pred = [[] for _ in range(n)]  # 前驱
 while q:
-    w, x = heapq.heappop(q)
-    if w > dist[x]: continue  # (O(mn) -> O(mlogm + n)) 提前剪枝 避免空转 x之前出堆过
+    d, x = heapq.heappop(q)
+    if d > dist[x]: continue  # (O(mn) -> O(mlogm + n)) 提前剪枝 避免空转 x之前出堆过
     for y, c in g[x]:
-        if dist[y] > w + c:
-            dist[y] = w + c
+        if dist[y] > d + w:
+            dist[y] = d + w
             heapq.heappush(q, (dist[y], y))
             pred[y] = [x]
-        elif dist[y] == w + c:
+        elif dist[y] == d + w:
             pred[y].append(x)
 # dist
 # pred
