@@ -38,7 +38,8 @@ d 是gcd 因为所有人的gcd 都是 gcd(a, b)
 所以递归边界 when b = 0 返回 a, 1, 0
 """
 import itertools
-
+import math
+# math.comb()
 
 def Exgcd(a, b):
     if b == 0:
