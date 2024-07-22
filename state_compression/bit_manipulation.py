@@ -50,6 +50,7 @@ lb = s & -s # lowbit/s 中最小元素
 
 ## 预处理子集的和
 # 预处子集和
+nums = [0,1,2,3,4]
 g = [0] * (1 << n)
 for s in range(1, 1 << n):  # for s in range(1<<n): 不能从0开始，否则吧net[-1] 算进去了
     lb = s & -s
