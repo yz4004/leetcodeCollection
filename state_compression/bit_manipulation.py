@@ -48,6 +48,13 @@ lb = s & -s # lowbit/s 中最小元素
        # 而他又正好是-s 根据补码的定义
        # 所以有 s & -s == lowbit
 
+## 预处理子集的和
+# 预处子集和
+g = [0] * (1 << n)
+for s in range(1, 1 << n):  # for s in range(1<<n): 不能从0开始，否则吧net[-1] 算进去了
+    lb = s & -s
+    g[s] = g[s - lb] + nums[lb.bit_length() - 1]
+
 """ 常见位运算技巧分类总结
 https://leetcode.cn/circle/discuss/CaOJ45/
 
