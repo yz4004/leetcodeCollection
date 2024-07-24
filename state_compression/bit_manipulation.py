@@ -66,6 +66,8 @@ https://leetcode.cn/circle/discuss/CaOJ45/
     就是二进制减法，如果是对s=101101 则每次 (sub-1) & s 即可将减法限制在s内
     https://leetcode.cn/circle/discuss/CaOJ45/
 
-
+2. 枚举子集的复杂度 （幂集枚举 二进制减法）
+    2^bit_count() 的幂集
+    从二进制减法角度思考, 不超过s进行二进制减法 （因为是在s内部进行） 所以复杂度不超过数值 s （lc982的复杂度分析）
 
 """
