@@ -2,7 +2,8 @@
 数位dp2.0 通用版本
 1.0 版本只支持 [0,n] 如果是范围 [low, high] 可以f(high) - f(low-1)
 2.0 考虑每位是否受到上下限制
-
+2999. 统计强大整数的数目
+https://leetcode.cn/problems/count-the-number-of-powerful-integers/description/
 本题要求选取数字处于 [start, finish] 范围内的数字 + 额外限制1 每位小于limit；额外限制2 必须以s为后缀
 
 f(i, is_low, is_high):
