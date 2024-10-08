@@ -1,6 +1,7 @@
 from collections import defaultdict
 """
     一个可以插入字符串的字典树，統計節點的詞數（以該節點為前綴的詞數），支持刪除操作
+    如果要删除 在父节点那里删除/查询儿子节点的，cur.children[c].nums -= 1
 """
 class Node:
     __slots__ = 'children', 'prefix', 'endOfWord', 'cnt'
