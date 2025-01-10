@@ -1,4 +1,4 @@
-class LazySegmentTree:  # sum
+class SegmentTreeSum:  # sum
     def __init__(self, nums):
         n = len(nums)
         self.nums = nums
