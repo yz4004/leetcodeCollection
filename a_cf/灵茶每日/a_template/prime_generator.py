@@ -1,21 +1,51 @@
 import math
+from collections import defaultdict
+from typing import List
 
-# 欧拉筛
-def eular(n):
-    prime = []
-    is_prime = [True] * (n+1)
-    for i in range(2, n+1):
-        if is_prime[i]:
-            prime.append(i)
-        for p in prime:
-            if i * p > n:
-                break
-            is_prime[i * p] = False
-            if i % p == 0: #找到了i的最小素因数，后面不再继续
-                break
-    return prime, is_prime
 """
-线性欧拉筛
+1. euler 线性筛
+2. 埃氏筛
+3. is prime
+"""
+
+# 1. Euler 线性筛 + spf (smallest prime factor)
+def euler_sieve(N):
+    primes = []
+    is_prime = [True] * (N+1)
+    is_prime[0] = is_prime[1] = False
+    spf = [0]*(N+1)   # spf[x] = x 的最小质因数
+
+    for i in range(2, N+1):
+        if is_prime[i]:
+            primes.append(i)
+            spf[i] = i
+
+        # 按递增素数p 作为spf去筛 t=p*i 保证每个p是x的spf (当p到达i的spf就应停止 见下break)
+        for p in primes:
+            t = i * p
+            if t > N: break
+
+            spf[t], is_prime[t] = p, False
+
+            if i % p == 0: # p|i 从小到大遍历p 的第一个 p|i 说明p=spf[i] 对后面大于p的 p'*i 就多余了，因为p`*i已被i的spf过滤掉
+                break
+    return primes, is_prime, spf
+N = 10 ** 6
+prime, is_prime, spf = euler_sieve()
+
+def factorize(x) -> List:
+    res = []
+    while x > 1:
+        p = spf[x]
+        cnt = 0
+        while x % p == 0:
+            x //= p
+            cnt += 1
+        res.append((p,cnt))
+    return res
+
+"""
+线性欧拉筛 + smallest prime factor
 1. 每个合数只被其最小素因子筛除一次 n = p_min * k
 2，外层for遍历乘数i，然后作用于当前找到的所有素因子，从小到大 直到遍历到i的最小素因子 p_min_i 
 （如果再超过这个数，筛到的合数实际上会以i的最小素因数为最小素因数，违背了只被最小素因数筛一次的要求，重复筛了）
@@ -23,7 +53,7 @@ def eular(n):
 """
 
 
-# 埃氏筛
+# 2. 埃氏筛
 def Eratosthenes(n: int) -> list:
     prime = []
     is_prime = [True]*(n+1) # 每个数去更新其倍数，没被更到的就是质数
@@ -45,8 +75,8 @@ def Eratosthenes(n: int) -> list:
 """
 
 
-# 判断prime
-def isPrime(x):
+# 3. is prime
+def is_prime(x):
     k = 2
     while k * k <= x:
         if x % k == 0:
@@ -124,3 +154,17 @@ t/pj = pk * i / pj 小于 i，因为pk小于pj 分母大的反而小 这个数�
 但更高效的方法是从每个素数出发去更新其倍数，类似埃氏筛，不提前截断，要的就是重复更新
 https://leetcode.cn/problems/apply-operations-to-maximize-score/
 """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
