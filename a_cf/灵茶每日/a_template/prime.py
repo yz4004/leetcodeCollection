@@ -77,10 +77,12 @@ def Eratosthenes(n: int) -> list:
 
 # 3. is prime
 def is_prime(x):
+    if x <= 1: return False
     k = 2
     while k * k <= x:
         if x % k == 0:
             return False
+        k += 1
     return True
 
 """
