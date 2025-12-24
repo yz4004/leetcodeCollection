@@ -18,37 +18,42 @@
 """
 
 ## 给定数字生成
-pal = []
-base = 1  # 每次循环节生成 [base, base*10]
-while base < 10 ** 5:  # 枚举长度上限，即我们接受5及以下的回文数
+def generate(MX):
+    pal = []
+    base = 1  # 每次循环节生成 [base, base*10]
+    # 1 10 100 ...
+    # base=1  1-9 11-99
+    # base=10 101...999 1001...9999
+    # ...
+    # base=1e5 能生成 9位/10位所有回文数
+    while True:
 
-    for i in range(base, base * 10):
-        x = i       #左半部分，每次对下面的t求个位数然后拼到x后面
-        t = i // 10 #奇数要跳过中间的数
-        while t:
-            x = 10 * x + (t % 10)
-            t //= 10
-        pal.append(x)
+        for i in range(base, base * 10):
+            x = i       #左半部分，每次对下面的t求个位数然后拼到x后面
+            t = i // 10 #奇数要跳过中间的数
+            while t:
+                x = 10 * x + (t % 10)
+                t //= 10
+            if x > MX:
+                return pal
+            pal.append(x)
 
-    if base > 10000: break # 如果base为10000 只生成了奇数 即9位数回文，这里截断
-    # 偶数
-    for i in range(base, base * 10):
-        x = i  # 同上，只是不跳过第一个个位了
-        t = i
-        while t:
-            x = 10 * x + (t % 10)
-            t //= 10
-        pal.append(x)
-    base *= 10
-print(pal[:100])
+        if base > 10000: break # 如果base为10000 只生成了奇数 即9位数回文，这里截断
+        # 偶数
+        for i in range(base, base * 10):
+            x = i  # 同上，只是不跳过第一个个位了
+            t = i
+            while t:
+                x = 10 * x + (t % 10)
+                t //= 10
+            if x > MX:
+                return pal
+            pal.append(x)
+        base *= 10
+generate(int(1e9))
 
 ### 给定字符串生成
 # 枚举n=4位数长度的回文数
-n = 4
-base = 10 ** ((n - 1) // 2)
-for i in range(base, base * 10):  # 枚举回文数左半边
-            s = str(i)
-            s += s[::-1][n % 2:] #n%2 如果n是奇数正好跳过0 从1开始 如果偶数就是s[0:]
 # https://leetcode.cn/problems/find-the-count-of-good-integers/solutions/2899725/mei-ju-suo-you-hui-wen-shu-zu-he-shu-xue-3d35/
 
 ####################### 预处理回文数的题目
@@ -59,6 +64,7 @@ for i in range(base, base * 10):  # 枚举回文数左半边
 2081. k 镜像数字的和 （先枚举k进制最好）
 564. 寻找最近的回文数 （不是预处理题目，但是涉及到回文数生成过程中的增长规律）
 3272. 统计好整数的数目 (生成回文数后，再考虑其所有排列，即数通过重排可以重构这个回文数）
+3766. 将数字变成二进制回文数的最少操作 (二进制回文数生成)
 """
 
 ####################### 递推顺序生成回文数的间隔问题 解决最近的回文数564问题
@@ -115,8 +121,8 @@ for i in range(base, base * 10):  # 枚举回文数左半边
     11311 100
     
 解决题目 564
-564. 寻找最近的回文数
+564. 寻找最近的回文数 https://leetcode.cn/problems/find-the-closest-palindrome/
 如果x本身也是回文数，仍不能考虑其本身，而是挑选附近最近的回文数
 考虑中心x x+1 x-1 的翻转，还要考虑退位进位的情况 详细见：
-https://leetcode.cn/problems/find-the-closest-palindrome/
+
 """
