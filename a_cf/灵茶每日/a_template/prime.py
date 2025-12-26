@@ -6,6 +6,11 @@ from typing import List
 1. euler 线性筛
 2. 埃氏筛
 3. is prime
+4. 根号复杂度返回x的因子
+5. 倍数枚举预处理因子 - 对1-1e5每个数 列出全部因子 
+    处理因子两种方法: 根号枚举/倍数调和级数枚举
+    
+
 """
 
 # 1. Euler 线性筛 + spf (smallest prime factor)
@@ -84,6 +89,25 @@ def is_prime(x):
             return False
         k += 1
     return True
+
+# 4. 根号复杂度返回x的因子
+def get_factors(x):
+    factors = []
+    for d in range(1, math.isqrt(x) + 1): # 没有isqrt用while loop
+        if x % d == 0:
+            factors.append(d)
+            if d * d < x:
+                factors.append(x//d)
+    return factors
+
+# 5. 倍数枚举预处理因子 - 对1-1e5每个数 列出全部因子
+def preprocess_factors(N=10 ** 5 + 1):
+    factors = [[] for _ in range(N)]
+    for d in range(1, N): # d是谁的因子?
+        for x in range(d, N, d): #d是x的因子
+            factors[x].append(d)
+    return factors
+
 
 """
 线性质数筛的详细过程： 
